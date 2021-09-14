@@ -6,4 +6,5 @@ class UltimateChineseChess:
         self.__tutorial = tutorial
         self.__language = language
 
-    def tutorial()
+    def tutorial():
+        ...
