@@ -1,0 +1,11 @@
+{
+  "tutorial": "Tutorial Skipped",
+  "welcome": "Welcome to the Ultimate Chinese Chess",
+  "rule_soldier": "Soldiers can only go forward one grid at a time before going beyond the river, whilst can go ←↑→ after crossing the river, can eat everything it touches",
+  "rule_cannon": "Cannons can move freely in four directions, and could only eat the object hiding directly behind another",
+  "rule_car": "Cars can move freely in four directions, and could eat the object it touches",
+  "rule_horse": "Horses can only move and eat the object in an '8' pattern whilst being unable to move if there are obstacles directly next to it in the direction of moving",
+  "rule_elephant": "Elephants can only move from (0,0) to (2,2) or from (0,0) to (-2,2), back or forward, and cannot go across the river",
+  "rule_knights": "Knights only moves from (0,0) to (1,1), or from (1,1) to (2.0), etc. Whilst it cannot leave the nine grids",
+  "rule_king": "King is the most important character in the game, the one who eats the opponent's king wins the game. It can only move in the nine grid one unit by a time, and cannot move like a knight"
+}
