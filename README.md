@@ -21,4 +21,8 @@ alternatively, you can use mirrors(Tsinghua University)
 **Once you are ready, run the following code to start your own server**
 
      python UltimateChineseChess_Backend/manage.py runserver
+
+### Following is the design of the chess board
+![Design](./design.png)
+
 ### Apache License 2.0 applied.

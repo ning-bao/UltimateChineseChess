@@ -1,13 +1,24 @@
 {
     "players": {
-        "1":"Alice",
-        "2":"Bob"
+        "0":"Alice",
+        "1":"Bob"
     },
     "GamePlay":{
-        "1":["r_horse","(0,1)","(2,2)"],
-        "2":["b_cannon","(2,1)","(2,4)"]
+        "0":["r_horse","(0,1)","(2,2)"],
+        "1":["b_cannon","(2,1)","(2,4)"]
     },
-    "currentMap":[[],[],[],[],[],[],[],[],[],[]],
+    "currentMap":[
+            ["b_car", "b_horse", "b_elephant", "b_knight", "b_king", "b_knight", "b_elephant", "b_horse", "b_car"],
+            ["", "", "", "", "", "", "", "", ""],
+            ["", "b_cannon", "", "", "", "", "", "b_cannon", ""],
+            ["b_soldier", "", "b_soldier", "", "b_soldier", "", "b_soldier", "", "b_soldier", ],
+            [],
+            [],
+            ["r_soldier", "", "r_soldier", "", "r_soldier", "", "r_soldier", "", "r_soldier", ],
+            ["", "r_cannon", "", "", "", "", "", "r_cannon", ""],
+            ["", "", "", "", "", "", "", "", ""],
+            ["r_car", "r_horse", "r_elephant", "r_knight", "r_king", "r_knight", "r_elephant", "r_horse", "r_car"],
+        ],
     "deathPool":[]
 
 }
