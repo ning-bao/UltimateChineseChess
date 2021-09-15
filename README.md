@@ -1,7 +1,7 @@
-# UltimateChineseChess
+# Ultimate Chinese Chess
 ****
 
-### This project aims to build a web application for Chinese Chess(still working on progress) 
+### This project(UltimateChineseChess) aims to build a web application for Chinese Chess(still working on progress) 
 **If you like this project, please hit the star⭐ button to support my work!!**
 ****
 **Demo site: https://ucc.baoning.dev** **(Not ready yet)**
