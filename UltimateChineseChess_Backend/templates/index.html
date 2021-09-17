@@ -25,7 +25,7 @@
             /* border: rgb(162, 179, 255) 2px solid; */
         }
         #playground #playArea{
-            background-image: url("static/imgs/layout.png");
+            background-image: url("static/imgs/layout-red.png");
             background-size: auto 85vh;
             width: 66.1vh;
             height: 85vh;
@@ -75,17 +75,30 @@
     <div class="playground" id="playground" hidden>
         <div class="haltGame" id="haltGame">
             <div id="question1">
-                <h2 class="questions">Have you played Chinese Chess?</h2>
+                <h2 class="questions">Do you have a match ID from UCC?</h2>
+                <div class="ans">
+                    <a onclick="addChoice('sessionSaved','yes')" href="#">Yes(1)</a>
+                    <a onclick="addChoice('sessionSaved','no')" href="#" style="color: lightcoral;">No(2)</a>
+                </div>
+            </div>
+            <div id="question2">
+                <h2 class="questions">Have you played Chinese Chess before?</h2>
                 <div class="ans">
                     <a onclick="addChoice('played','yes')" href="#">Yes(1)</a>
                     <a onclick="addChoice('played','no')" href="#" style="color: lightcoral;">No(2)</a>
                 </div>
             </div>
-            <div id="question2">
+            <div id="question3">
                 <h2 class="questions">Do you wish to play with human or AI?</h2>
                 <div class="ans">
                     <a onclick="addChoice('opponent','ai')" href="#">AI(1)</a>
                     <a onclick="addChoice('opponnet','human')" href="#" style="color: lightcoral;">Human(2)</a>
+                </div>
+            </div>
+            <div id="question4">
+                <h2 class="questions">Are you READY to play?</h2>
+                <div class="ans">
+                    <a onclick="addChoice('opponent','ai')" href="#" style="color: rgb(198, 229, 255);">Start Playing!</a>
                 </div>
             </div>
 
@@ -110,7 +123,25 @@
             localStorage.setItem(k,a)
         }
         const startGame = ()=>{
-            
+            if (localStorage.getItem('sessionSaved')==='yes'){
+                var matchID = prompt("Please give your match ID:")
+                loadExistingGame(matchID)
+            }
+        }
+        const loadExistingGame = (matchID)=>{
+            $.ajax({
+                url: window.origin,
+                method: 'POST',
+                data:{
+                    matchID: matchID
+                },
+                success: (map)=>{
+                    loadMap(map.map)
+                }
+            })
+        }
+        const loadMap = (maps)=>{
+
         }
     </script>
 </body>
