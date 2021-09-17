@@ -1,10 +1,117 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <title>Ultimate Chinese Chess</title>
+    <style>
+        body{
+            background: aliceblue;
+            font-family: 'Calibri';
+        }
+        #title_text{
+            text-align: center;
+        }
+        #playground{
+            width: 90vw;
+            /* max-width: 700px; */
+            min-width: 700px;
+            max-width: 800px;
+            margin-left: 50%;
+            transform: translate(-50%);
+            height: 85vh;
+            padding-bottom: 30px;
+            
+            /* background-color: aqua; */
+            /* border: rgb(162, 179, 255) 2px solid; */
+        }
+        #playground #playArea{
+            background-image: url("static/imgs/layout.png");
+            background-size: auto 85vh;
+            width: 66.1vh;
+            height: 85vh;
+            margin-left: 50%;
+            transform: translate(-50%, 15px);
+            background-repeat: no-repeat;
+        }
+        #haltGame{
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            background: rgba(8, 35, 56, 0.7);
+            color: ivory;
+        }
+        .questions{
+            margin-left: 100px;
+            margin-top: 30px;
+        }
+        .submitForm{
+            margin-left: 100px;
+            height: 30px;
+            line-height: 30px;
+        }
+        a{
+            text-decoration: none;
+            color: rgb(67, 182, 134);
+            margin-left: 60px;
+            font-size: 50px;
+            font-weight: bold;
+        }
+        a:hover{
+            text-decoration: underline;
+        }
+        .ans{
+            display: flexbox;
+            flex-direction: column;
+            width: 500px;
+            margin-left: 40%;
+            transform: translateX(-50%);
+        }
+    </style>
 </head>
 <body>
-$END$
+
+    <h1 id="title_text">Loading...</h1>
+    <div class="playground" id="playground" hidden>
+        <div class="haltGame" id="haltGame">
+            <div id="question1">
+                <h2 class="questions">Have you played Chinese Chess?</h2>
+                <div class="ans">
+                    <a onclick="addChoice('played','yes')" id="played" href="#">Yes(1)</a>
+                    <a onclick="addChoice('played','no')" id="played" href="#" style="color: lightcoral;">No(2)</a>
+                </div>
+            </div>
+            <div id="question2">
+                <h2 class="questions">Do you wish to play with human or AI?</h2>
+                <div class="ans">
+                    <a onclick="addChoice('opponent','ai')" id="played" href="#">AI(1)</a>
+                    <a onclick="addChoice('opponnet','human')" id="played" href="#" style="color: lightcoral;">Human(2)</a>
+                </div>
+            </div>
+
+        </div>
+        <div class="playArea" id="playArea">
+
+        </div>
+    </div>
+    <script src="static/js/jquery.min.js"></script>
+    <script>
+        window.onload = ()=>{
+            document.getElementById("title_text").innerText = 'Ultimate Chinese Chess'
+            $("#playground").show()
+        }
+        const locationCalculator = (x,y) => {
+            
+        }
+        const updateChessLocation = ()=>{
+
+        }
+        const addChoice = (k,a)=>{
+            localStorage.setItem(k,a)
+        }
+        const startGame = ()=>{
+            
+        }
+    </script>
 </body>
 </html>

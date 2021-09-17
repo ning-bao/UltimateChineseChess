@@ -33,10 +33,10 @@ class UltimateChineseChess:
 
     def startTutorial(self):
         # Loading language pack from .json
-        f = open('languagePack/%s_tutorial.json' % self.__skipping, encoding='utf-8')
+        f = open('./languagePack/%s_tutorial.json' % self.__language, encoding='utf-8')
         languagePack = json.load(f)
 
-        if not self.__tutorial:
+        if not self.__skipping:
             return [languagePack['skipping']]
         else:
             return [languagePack['welcome'],
@@ -216,10 +216,12 @@ class UltimateChineseChess:
         else:
             return False
 
+        return True
+
 
 if __name__ == '__main__':
     chess = UltimateChineseChess(True, 'en-us', '00000001')
-    chess.startTutorial()
+    print(chess.startTutorial())
     '''
     About variable Naming:
         b_soldier: Black Soldier
