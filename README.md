@@ -25,7 +25,7 @@ alternatively, you can use mirrors(Tsinghua University)
 ### Following is the design of the chess board
 ![Design](./design.png)
 
-### Development log:
+### Development Progress:
 **09/17/2021**
 ![Dev Progress](./progress.png)
 
