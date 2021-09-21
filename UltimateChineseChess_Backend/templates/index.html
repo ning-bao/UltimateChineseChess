@@ -24,7 +24,7 @@
             /* background-color: aqua; */
             /* border: rgb(162, 179, 255) 2px solid; */
         }
-        #playground #playArea{
+        #playground .playArea{
             background-image: url("static/imgs/layout-red.png");
             background-size: auto 85vh;
             width: 66.1vh;
@@ -67,6 +67,37 @@
             margin-left: 40%;
             transform: translateX(-50%);
         }
+        .chessPosition{
+            width: 6.8vh;
+            height: 6.8vh;
+            /* background-color: blue; */
+            margin-left: 0.5vh;
+            margin-top: 0.5vh;
+            transform: translate(1px,-1px);
+
+        }
+        .wrapper{
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+        }
+        .river{
+            width: 100%;
+            height: 11.5vh;
+            /* background-color: blueviolet; */
+        }
+        .chessWrap{
+            width: 6.8vh;
+            height: 6.8vh;
+            cursor: pointer;
+        }
+        .chessWrap .chessUnit{
+            width: 100%;
+            height: 100%;
+        }
+        .highlight{
+            background-color: rgb(255, 244, 194);
+        }
     </style>
 </head>
 <body>
@@ -77,71 +108,233 @@
             <div id="question1">
                 <h2 class="questions">Do you have a match ID from UCC?</h2>
                 <div class="ans">
-                    <a onclick="addChoice('sessionSaved','yes')" href="#">Yes(1)</a>
-                    <a onclick="addChoice('sessionSaved','no')" href="#" style="color: lightcoral;">No(2)</a>
+                    <a onclick="addChoice('sessionSaved','yes', 1)" href="#">Yes(1)</a>
+                    <a onclick="addChoice('sessionSaved','no', 1)" href="#" style="color: lightcoral;">No(2)</a>
                 </div>
             </div>
-            <div id="question2">
+            <div id="question2" hidden>
                 <h2 class="questions">Have you played Chinese Chess before?</h2>
                 <div class="ans">
-                    <a onclick="addChoice('played','yes')" href="#">Yes(1)</a>
-                    <a onclick="addChoice('played','no')" href="#" style="color: lightcoral;">No(2)</a>
+                    <a onclick="addChoice('played','yes', 2)" href="#">Yes(1)</a>
+                    <a onclick="addChoice('played','no', 2)" href="#" style="color: lightcoral;">No(2)</a>
                 </div>
             </div>
-            <div id="question3">
+            <div id="question3" hidden>
                 <h2 class="questions">Do you wish to play with human or AI?</h2>
                 <div class="ans">
-                    <a onclick="addChoice('opponent','ai')" href="#">AI(1)</a>
-                    <a onclick="addChoice('opponnet','human')" href="#" style="color: lightcoral;">Human(2)</a>
+                    <a onclick="addChoice('opponent','ai', 3)" href="#">AI(1)</a>
+                    <a onclick="addChoice('opponnet','human', 3)" href="#" style="color: lightcoral;">Human(2)</a>
                 </div>
             </div>
-            <div id="question4">
+            <div id="question4" hidden>
                 <h2 class="questions">Are you READY to play?</h2>
                 <div class="ans">
-                    <a onclick="addChoice('opponent','ai')" href="#" style="color: rgb(198, 229, 255);">Start Playing!</a>
+                    <a onclick="startGame()" href="#" style="color: rgb(198, 229, 255);">Start Playing!</a>
                 </div>
             </div>
 
         </div>
-        <div class="playArea" id="playArea">
+        <div class="playArea">
+            <div class="wrapper" id="playArea0">
+                <div id="00" class="chessPosition"></div>
+                <div id="01" class="chessPosition"></div>
+                <div id="02" class="chessPosition"></div>
+                <div id="03" class="chessPosition"></div>
+                <div id="04" class="chessPosition"></div>
+                <div id="05" class="chessPosition"></div>
+                <div id="06" class="chessPosition"></div>
+                <div id="07" class="chessPosition"></div>
+                <div id="08" class="chessPosition"></div>
+            </div>
+            <div class="wrapper" id="playArea1">
+                <div id="10" class="chessPosition"></div>
+                <div id="11" class="chessPosition"></div>
+                <div id="12" class="chessPosition"></div>
+                <div id="13" class="chessPosition"></div>
+                <div id="14" class="chessPosition"></div>
+                <div id="15" class="chessPosition"></div>
+                <div id="16" class="chessPosition"></div>
+                <div id="17" class="chessPosition"></div>
+                <div id="18" class="chessPosition"></div>
+            </div>
+            <div class="wrapper" id="playArea2">
+                <div id="20" class="chessPosition"></div>
+                <div id="21" class="chessPosition"></div>
+                <div id="22" class="chessPosition"></div>
+                <div id="23" class="chessPosition"></div>
+                <div id="24" class="chessPosition"></div>
+                <div id="25" class="chessPosition"></div>
+                <div id="26" class="chessPosition"></div>
+                <div id="27" class="chessPosition"></div>
+                <div id="28" class="chessPosition"></div>
+            </div>
+            <div class="wrapper" id="playArea3">
+                <div id="30" class="chessPosition"></div>
+                <div id="31" class="chessPosition"></div>
+                <div id="32" class="chessPosition"></div>
+                <div id="33" class="chessPosition"></div>
+                <div id="34" class="chessPosition"></div>
+                <div id="35" class="chessPosition"></div>
+                <div id="36" class="chessPosition"></div>
+                <div id="37" class="chessPosition"></div>
+                <div id="38" class="chessPosition"></div>
+            </div>
+            <div class="wrapper" id="playArea4">
+                <div id="40" class="chessPosition"></div>
+                <div id="41" class="chessPosition"></div>
+                <div id="42" class="chessPosition"></div>
+                <div id="43" class="chessPosition"></div>
+                <div id="44" class="chessPosition"></div>
+                <div id="45" class="chessPosition"></div>
+                <div id="46" class="chessPosition"></div>
+                <div id="47" class="chessPosition"></div>
+                <div id="48" class="chessPosition"></div>
+            </div>
 
+            <div class="river"></div>
+
+            <div class="wrapper" id="playArea5">
+                <div id="50" class="chessPosition"></div>
+                <div id="51" class="chessPosition"></div>
+                <div id="52" class="chessPosition"></div>
+                <div id="53" class="chessPosition"></div>
+                <div id="54" class="chessPosition"></div>
+                <div id="55" class="chessPosition"></div>
+                <div id="56" class="chessPosition"></div>
+                <div id="57" class="chessPosition"></div>
+                <div id="58" class="chessPosition"></div>
+            </div>
+            <div class="wrapper" id="playArea6">
+                <div id="60" class="chessPosition"></div>
+                <div id="61" class="chessPosition"></div>
+                <div id="62" class="chessPosition"></div>
+                <div id="63" class="chessPosition"></div>
+                <div id="64" class="chessPosition"></div>
+                <div id="65" class="chessPosition"></div>
+                <div id="66" class="chessPosition"></div>
+                <div id="67" class="chessPosition"></div>
+                <div id="68" class="chessPosition"></div>
+            </div>
+            <div class="wrapper" id="playArea7">
+                <div id="70" class="chessPosition"></div>
+                <div id="71" class="chessPosition"></div>
+                <div id="72" class="chessPosition"></div>
+                <div id="73" class="chessPosition"></div>
+                <div id="74" class="chessPosition"></div>
+                <div id="75" class="chessPosition"></div>
+                <div id="76" class="chessPosition"></div>
+                <div id="77" class="chessPosition"></div>
+                <div id="78" class="chessPosition"></div>
+            </div>
+            <div class="wrapper" id="playArea8">
+                <div id="80" class="chessPosition"></div>
+                <div id="81" class="chessPosition"></div>
+                <div id="82" class="chessPosition"></div>
+                <div id="83" class="chessPosition"></div>
+                <div id="84" class="chessPosition"></div>
+                <div id="85" class="chessPosition"></div>
+                <div id="86" class="chessPosition"></div>
+                <div id="87" class="chessPosition"></div>
+                <div id="88" class="chessPosition"></div>
+            </div>
+            <div class="wrapper" id="playArea9">
+                <div id="80" class="chessPosition">
+                    <span class="chessWrap"><img class="chessUnit" src="static/imgs/chess/elephant-black.png"></img></span>
+                </div>
+                <div id="91" class="chessPosition"></div>
+                <div id="92" class="chessPosition"></div>
+                <div id="93" class="chessPosition"></div>
+                <div id="94" class="chessPosition"></div>
+                <div id="95" class="chessPosition"></div>
+                <div id="96" class="chessPosition"></div>
+                <div id="97" class="chessPosition"></div>
+                <div id="98" class="chessPosition"></div>
+            </div>
         </div>
+
     </div>
     <script src="static/js/jquery.min.js"></script>
     <script>
         window.onload = ()=>{
             document.getElementById("title_text").innerText = 'Ultimate Chinese Chess'
             $("#playground").show()
+            $("span").on("click", function(e){
+                e.preventDefault();
+                console.log($(this).closest('div').attr("id"))
+                highlightingGrid([80,51], $(this).closest('div').attr("id"))
+            })
         }
-        const locationCalculator = (x,y) => {
+        const updateChessLocation = (newPlace, oldPlace)=>{
             
         }
-        const updateChessLocation = ()=>{
-
-        }
-        const addChoice = (k,a)=>{
+        const addChoice = (k,a,serialNo)=>{
             localStorage.setItem(k,a)
+            if (serialNo===1 && a==='yes'){
+                startGame()
+            }else if (serialNo===1){
+                $("#question1 .ans").remove()
+                $("#question2").show()
+            }else if (serialNo===2){
+                $("#question2 .ans").remove()
+                $("#question3").show()
+            }else if (serialNo===3){
+                $("#question3 .ans").remove()
+                $("#question4").show()
+            }
         }
         const startGame = ()=>{
             if (localStorage.getItem('sessionSaved')==='yes'){
                 var matchID = prompt("Please give your match ID:")
                 loadExistingGame(matchID)
+                
             }
+            $("#haltGame").hide()
+
         }
         const loadExistingGame = (matchID)=>{
             $.ajax({
                 url: window.origin,
                 method: 'POST',
                 data:{
-                    matchID: matchID
+                    matchID: matchID,
+                    type: "load game"
                 },
                 success: (map)=>{
-                    loadMap(map.map)
+                    loadMap(JSON.parse(map.map))
                 }
             })
         }
         const loadMap = (maps)=>{
-
+            for(i=0;i<=9;i++){
+                for(j=0;j<=8;j++){
+                    if (!maps.i.j===""){
+                        $(`#${i}${j}`).html(`<span class="chessWrap"><img class="chessUnit" src="static/imgs/chess/${maps.i.j}.png"></img></span>`)
+                    }
+                }
+            }
+        }
+        const moveChessIndicator = ()=>{
+            $.ajax({
+                url: window.origin,
+                method: 'POST',
+                data:{
+                    matchID: matchID,
+                    type:"indicator"
+                },
+                success: (highlight)=>{
+                    highlightingGrid(highlight)
+                }
+            })
+        }
+        const highlightingGrid = (arr, currentPlace)=>{
+            for (i=0;i<arr.length;i++){
+                var ele_id = arr[i]
+                $(`#${ele_id}`).addClass("highlight")
+                $(`#${ele_id}`).click(function(e){
+                    e.preventDefault()
+                    updateChessLocation(ele_id, currentPlace)
+                })
+            }
         }
     </script>
 </body>
