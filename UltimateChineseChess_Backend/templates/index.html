@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Ultimate Chinese Chess</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
         body{
             background: aliceblue;
@@ -97,11 +98,45 @@
         }
         .highlight{
             background-color: rgb(255, 244, 194);
+            cursor: pointer;
+        }
+        .notificationBar{
+            right: 5vw;
+            position: fixed;
+            width: auto;
+            height: 50px;
+            background-color: aquamarine;
+            padding: 10px 40px;
+            border-radius: 10px;
+            min-width: 100px;
+            box-shadow: 0 2px 4px lightgray;
+        }
+        h3{
+            font-weight: bold;
+            /* margin-top: 30%; */
+            /* transform: translateY(-50px); */
+            text-align: center;
+            font-size: 22px;
+            width: 100%;
+            color: darkblue;
+        }
+        .notificationBar .hintTitle{
+            position: absolute;
+            z-index: 2;
+            left: 20px;
+            top: -5px;
+            font-size: 15px;
+        }
+        .selecting img{
+            box-shadow: 0 3px 6px rgb(28, 108, 139);
         }
     </style>
 </head>
 <body>
-
+    <div class="notificationBar" id="notification" >
+        <p class="hintTitle">Notification:</p>
+        <h3 class="noteContent">Hello World!</h3>
+    </div>
     <h1 id="title_text">Loading...</h1>
     <div class="playground" id="playground" hidden>
         <div class="haltGame" id="haltGame">
@@ -238,8 +273,8 @@
                 <div id="88" class="chessPosition"></div>
             </div>
             <div class="wrapper" id="playArea9">
-                <div id="80" class="chessPosition">
-                    <span class="chessWrap"><img class="chessUnit" src="static/imgs/chess/elephant-black.png"></img></span>
+                <div id="90" class="chessPosition">
+                    <span class="chessWrap" ><img class="chessUnit" src="static/imgs/chess/elephant-black.png"></img></span>
                 </div>
                 <div id="91" class="chessPosition"></div>
                 <div id="92" class="chessPosition"></div>
@@ -258,14 +293,21 @@
         window.onload = ()=>{
             document.getElementById("title_text").innerText = 'Ultimate Chinese Chess'
             $("#playground").show()
+            chessClick()
+        }
+        const chessClick = ()=>{
             $("span").on("click", function(e){
                 e.preventDefault();
                 console.log($(this).closest('div').attr("id"))
-                highlightingGrid([80,51], $(this).closest('div').attr("id"))
+                // highlightingGrid([80,51], $(this).closest('div').attr("id"))
+                moveChessIndicator($(this).closest('div').attr("id"))
             })
         }
+
         const updateChessLocation = (newPlace, oldPlace)=>{
-            
+            $(`#${oldPlace} span`).detach().appendTo(`#${newPlace}`)
+            deselect()
+            chessClick()
         }
         const addChoice = (k,a,serialNo)=>{
             localStorage.setItem(k,a)
@@ -287,8 +329,18 @@
                 var matchID = prompt("Please give your match ID:")
                 loadExistingGame(matchID)
                 
+            }else{
+                $.ajax({
+                    url:location.origin + '/MatchStart',
+                    data:{
+                        requestingMatchID: true
+                    },
+                    success:(back)=>{
+                        localStorage.setItem("matchID", back.matchID)
+                    }
+                })
+                $("#haltGame").hide()
             }
-            $("#haltGame").hide()
 
         }
         const loadExistingGame = (matchID)=>{
@@ -307,13 +359,13 @@
         const loadMap = (maps)=>{
             for(i=0;i<=9;i++){
                 for(j=0;j<=8;j++){
-                    if (!maps.i.j===""){
+                    if (maps.i.j!==""){
                         $(`#${i}${j}`).html(`<span class="chessWrap"><img class="chessUnit" src="static/imgs/chess/${maps.i.j}.png"></img></span>`)
                     }
                 }
             }
         }
-        const moveChessIndicator = ()=>{
+        const moveChessIndicator = (currentPlace)=>{
             $.ajax({
                 url: window.origin,
                 method: 'POST',
@@ -322,19 +374,35 @@
                     type:"indicator"
                 },
                 success: (highlight)=>{
-                    highlightingGrid(highlight)
+                    highlightingGrid(highlight, currentPlace)
+                },
+                error:(e)=>{
+                    $(".hintTitle").text("Error:")
+                    $(".noteContent").text(e.content)
+                    $(".notificationBar").show()
                 }
             })
         }
         const highlightingGrid = (arr, currentPlace)=>{
+            $(`#${currentPlace} span`).addClass('selecting')
             for (i=0;i<arr.length;i++){
-                var ele_id = arr[i]
+                let ele_id = arr[i]
                 $(`#${ele_id}`).addClass("highlight")
                 $(`#${ele_id}`).click(function(e){
                     e.preventDefault()
                     updateChessLocation(ele_id, currentPlace)
                 })
             }
+            $(".selecting").click(()=>{
+                deselect()
+            })
+        }
+        const deselect = ()=>{
+                // deselecting...
+                
+                $('.selecting').removeClass('selecting')
+                $('.highlight').removeClass('highlight')
+            
         }
     </script>
 </body>
