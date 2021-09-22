@@ -26,7 +26,7 @@
             /* border: rgb(162, 179, 255) 2px solid; */
         }
         #playground .playArea{
-            background-image: url("static/imgs/layout-red.png");
+            background-image: url("/static/imgs/layout-red.png");
             background-size: auto 85vh;
             width: 66.1vh;
             height: 85vh;
@@ -274,7 +274,7 @@
             </div>
             <div class="wrapper" id="playArea9">
                 <div id="90" class="chessPosition">
-                    <span class="chessWrap" ><img class="chessUnit" src="static/imgs/chess/elephant-black.png"></img></span>
+                    <span class="chessWrap" ><img class="chessUnit" src="/static/imgs/chess/elephant-black.png"></img></span>
                 </div>
                 <div id="91" class="chessPosition"></div>
                 <div id="92" class="chessPosition"></div>
@@ -288,7 +288,7 @@
         </div>
 
     </div>
-    <script src="static/js/jquery.min.js"></script>
+    <script src="/static/js/jquery.min.js"></script>
     <script>
         window.onload = ()=>{
             document.getElementById("title_text").innerText = 'Ultimate Chinese Chess'
@@ -360,7 +360,7 @@
             for(i=0;i<=9;i++){
                 for(j=0;j<=8;j++){
                     if (maps.i.j!==""){
-                        $(`#${i}${j}`).html(`<span class="chessWrap"><img class="chessUnit" src="static/imgs/chess/${maps.i.j}.png"></img></span>`)
+                        $(`#${i}${j}`).html(`<span class="chessWrap"><img class="chessUnit" src="/static/imgs/chess/${maps.i.j}.png"></img></span>`)
                     }
                 }
             }
