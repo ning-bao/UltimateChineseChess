@@ -143,22 +143,22 @@
             <div id="question1">
                 <h2 class="questions">Do you have a match ID from UCC?</h2>
                 <div class="ans">
-                    <a onclick="addChoice('sessionSaved','yes', 1)" href="#">Yes(1)</a>
-                    <a onclick="addChoice('sessionSaved','no', 1)" href="#" style="color: lightcoral;">No(2)</a>
+                    <a onclick="addChoice('sessionSaved','yes', 1)" href="#">Yes</a>
+                    <a onclick="addChoice('sessionSaved','no', 1)" href="#" style="color: lightcoral;">No</a>
                 </div>
             </div>
             <div id="question2" hidden>
                 <h2 class="questions">Have you played Chinese Chess before?</h2>
                 <div class="ans">
-                    <a onclick="addChoice('played','yes', 2)" href="#">Yes(1)</a>
-                    <a onclick="addChoice('played','no', 2)" href="#" style="color: lightcoral;">No(2)</a>
+                    <a onclick="addChoice('played','yes', 2)" href="#">Yes</a>
+                    <a onclick="addChoice('played','no', 2)" href="#" style="color: lightcoral;">No</a>
                 </div>
             </div>
             <div id="question3" hidden>
                 <h2 class="questions">Do you wish to play with human or AI?</h2>
                 <div class="ans">
-                    <a onclick="addChoice('opponent','ai', 3)" href="#">AI(1)</a>
-                    <a onclick="addChoice('opponnet','human', 3)" href="#" style="color: lightcoral;">Human(2)</a>
+                    <a onclick="addChoice('opponent','ai', 3)" href="#">AI</a>
+                    <a onclick="addChoice('opponnet','human', 3)" href="#" style="color: lightcoral;">Human</a>
                 </div>
             </div>
             <div id="question4" hidden>
@@ -379,6 +379,18 @@
                     success:(back)=>{
                         console.log(back.matchID)
                         localStorage.setItem("matchID", back.matchID)
+                        loadMap([
+            ["car-black", "", "elephant-black", "knight-black", "king-black", "knight-black", "elephant-black", "horse-black", "car-black"],
+            ["", "", "", "", "", "", "", "", ""],
+            ["", "cannon-black", "horse-black", "", "", "", "", "cannon-black", ""],
+            ["soldier-black", "", "soldier-black", "", "soldier-black", "", "soldier-black", "", "soldier-black" ],
+            ["", "", "", "", "", "", "", "", ""],
+            ["", "", "", "", "", "", "", "", ""],
+            ["soldier-red", "", "soldier-red", "", "soldier-red", "", "soldier-red", "", "soldier-red" ],
+            ["", "", "", "", "cannon-red", "", "", "cannon-red", ""],
+            ["", "", "", "", "", "", "", "", ""],
+            ["car-red", "horse-red", "elephant-red", "knight-red", "king-red", "knight-red", "elephant-red", "horse-red", "car-red"]
+        ])
                     }
                 })
                 $("#haltGame").hide()
@@ -401,8 +413,8 @@
         const loadMap = (maps)=>{
             for(i=0;i<=9;i++){
                 for(j=0;j<=8;j++){
-                    if (maps.i.j!==""){
-                        $(`#${i}${j}`).html(`<span class="chessWrap"><img class="chessUnit" src="/static/imgs/chess/${maps.i.j}.png"></img></span>`)
+                    if (maps[i][j]!==""){
+                        $(`#${i}${j}`).html(`<span class="chessWrap"><img class="chessUnit" src="/static/imgs/chess/${maps[i][j]}.png"></img></span>`)
                     }
                 }
             }

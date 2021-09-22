@@ -26,7 +26,10 @@ alternatively, you can use mirrors(Tsinghua University)
 ![Design](./design.png)
 
 ### Development Progress:
+**09/22/2021**
+![Dev Progress 9.22](./progress.png)
+     
 **09/17/2021**
-![Dev Progress](./progress.png)
+![Dev Progress 9.17](./progress-1.png)
 
 ### Apache License 2.0 applied.
