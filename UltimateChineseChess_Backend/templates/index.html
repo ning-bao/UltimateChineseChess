@@ -291,9 +291,47 @@
     <script src="/static/js/jquery.min.js"></script>
     <script>
         window.onload = ()=>{
+            $.ajaxSetup({ 
+        beforeSend: function(xhr, settings) {
+            function getCookie(name) {
+                var cookieValue = null;
+                if (document.cookie && document.cookie != '') {
+                    var cookies = document.cookie.split(';');
+                    for (var i = 0; i < cookies.length; i++) {
+                        var cookie = jQuery.trim(cookies[i]);
+                        // Does this cookie string begin with the name we want?
+                        if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+            if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+                // Only send the token to relative URLs i.e. locally.
+                xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+            }
+        } 
+   });
             document.getElementById("title_text").innerText = 'Ultimate Chinese Chess'
             $("#playground").show()
             chessClick()
+        }
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
         }
         const chessClick = ()=>{
             $("span").on("click", function(e){
@@ -332,10 +370,14 @@
             }else{
                 $.ajax({
                     url:location.origin + '/MatchStart',
+                    method:"post",
+                    mode:'same-origin',
                     data:{
-                        requestingMatchID: true
+                        requestingMatchID: true,
+                        csrfmiddlewaretoken:getCookie('csrftoken'),
                     },
                     success:(back)=>{
+                        console.log(back.matchID)
                         localStorage.setItem("matchID", back.matchID)
                     }
                 })
@@ -370,11 +412,12 @@
                 url: window.origin,
                 method: 'POST',
                 data:{
-                    matchID: matchID,
-                    type:"indicator"
+                    matchID: localStorage.matchID,
+                    type:"indicator",
+                    csrfmiddlewaretoken:getCookie('csrftoken'),
                 },
-                success: (highlight)=>{
-                    highlightingGrid(highlight, currentPlace)
+                success: (back)=>{
+                    highlightingGrid(back.highlight, currentPlace)
                 },
                 error:(e)=>{
                     $(".hintTitle").text("Error:")

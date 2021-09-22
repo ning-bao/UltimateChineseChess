@@ -1,6 +1,8 @@
 import json
 import uuid
 
+from django import shortcuts
+
 
 class UltimateChineseChess:
     '''
@@ -14,7 +16,10 @@ class UltimateChineseChess:
         '''
         self.__skipping = skipping
         self.__language = language
-        self.currentMap = [[], [], [], [], [], [], [], [], [], []]
+        f = open("SavedGamePlay/%s.json"%gameId)
+        self.currentMap = json.load(f)["currentMap"]
+        f.close()
+        # print(self.currentMap)
         self.initialMap = [
             ["b_car", "b_horse", "b_elephant", "b_knight", "b_king", "b_knight", "b_elephant", "b_horse", "b_car"],
             ["", "", "", "", "", "", "", "", ""],
@@ -76,6 +81,8 @@ class UltimateChineseChess:
         return self.currentMap
 
     def verifyChess(self, name, initialLocation: list, finalLocation: list, player: int):
+        # print(initialLocation)
+        # print(finalLocation)
         # Check if initial and final are in the chess board
         if not (0 <= initialLocation[0] <= 9 and 0 <= initialLocation[1] <= 8 and 0 <= finalLocation[0] <= 9 and 0 <=
                 finalLocation[1] <= 8):
