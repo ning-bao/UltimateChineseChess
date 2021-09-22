@@ -4,6 +4,24 @@
     <meta charset="UTF-8">
     <title>Ultimate Chinese Chess</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% load static %}
+    {% csrf_token %}
+    <link rel="preload" href="/static/imgs/chess/cannon-black.png" as="image">
+    <link rel="preload" href="/static/imgs/chess/cannon-red.png" as="image">
+    <link rel="preload" href="/static/imgs/chess/car-black.png" as="image">
+    <link rel="preload" href="/static/imgs/chess/car-red.png" as="image">
+    <link rel="preload" href="/static/imgs/chess/elephant-black.png" as="image">
+    <link rel="preload" href="/static/imgs/chess/elephant-red.png" as="image">
+    <link rel="preload" href="/static/imgs/chess/horse-black.png" as="image">
+    <link rel="preload" href="/static/imgs/chess/horse-red.png" as="image">
+    <link rel="preload" href="/static/imgs/chess/king-black.png" as="image">
+    <link rel="preload" href="/static/imgs/chess/king-red.png" as="image">
+    <link rel="preload" href="/static/imgs/chess/knight-black.png" as="image">
+    <link rel="preload" href="/static/imgs/chess/knight-red.png" as="image">
+    <link rel="preload" href="/static/imgs/chess/soldier-black.png" as="image">
+    <link rel="preload" href="/static/imgs/chess/soldier-red.png" as="image">
+    <link rel="preload" href="/static/imgs/layout-red.png" as="image">
+    <link rel="preload" href="/static/imgs/layout-black.png" as="image">
     <style>
         body{
             background: aliceblue;
@@ -130,6 +148,21 @@
         .selecting img{
             box-shadow: 0 3px 6px rgb(28, 108, 139);
         }
+        .playground .wait{
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            left: 0;top: 0;
+            background-color: rgba(99, 163, 212, 0.2);
+            z-index: 3;
+        }
+        .playground .wait h2{
+            text-align: center;
+            color: seashell;
+            text-shadow: slategray 0 2px 4px;
+            margin-top: 40vh;
+            font-size: xx-large;
+        }
     </style>
 </head>
 <body>
@@ -138,7 +171,10 @@
         <h3 class="noteContent">Hello World!</h3>
     </div>
     <h1 id="title_text">Loading...</h1>
-    <div class="playground" id="playground" hidden>
+    <div class="playground" id="playground" >
+        <div class="wait" id="pleaseWait" hidden>
+            <h2 class="waitingOpponent">Waiting for opponent...</h2>
+        </div>
         <div class="haltGame" id="haltGame">
             <div id="question1">
                 <h2 class="questions">Do you have a match ID from UCC?</h2>
@@ -380,14 +416,14 @@
                         console.log(back.matchID)
                         localStorage.setItem("matchID", back.matchID)
                         loadMap([
-            ["car-black", "", "elephant-black", "knight-black", "king-black", "knight-black", "elephant-black", "horse-black", "car-black"],
+            ["car-black", "horse-black", "elephant-black", "knight-black", "king-black", "knight-black", "elephant-black", "horse-black", "car-black"],
             ["", "", "", "", "", "", "", "", ""],
-            ["", "cannon-black", "horse-black", "", "", "", "", "cannon-black", ""],
+            ["", "cannon-black", "", "", "", "", "", "cannon-black", ""],
             ["soldier-black", "", "soldier-black", "", "soldier-black", "", "soldier-black", "", "soldier-black" ],
             ["", "", "", "", "", "", "", "", ""],
             ["", "", "", "", "", "", "", "", ""],
             ["soldier-red", "", "soldier-red", "", "soldier-red", "", "soldier-red", "", "soldier-red" ],
-            ["", "", "", "", "cannon-red", "", "", "cannon-red", ""],
+            ["", "cannon-red", "", "", "", "", "", "cannon-red", ""],
             ["", "", "", "", "", "", "", "", ""],
             ["car-red", "horse-red", "elephant-red", "knight-red", "king-red", "knight-red", "elephant-red", "horse-red", "car-red"]
         ])
@@ -405,8 +441,8 @@
                     matchID: matchID,
                     type: "load game"
                 },
-                success: (map)=>{
-                    loadMap(JSON.parse(map.map))
+                success: (callback)=>{
+                    loadMap(callback.map)
                 }
             })
         }
