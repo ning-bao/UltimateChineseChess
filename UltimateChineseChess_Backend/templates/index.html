@@ -352,7 +352,7 @@
    });
             document.getElementById("title_text").innerText = 'Ultimate Chinese Chess'
             $("#playground").show()
-            chessClick()
+            // chessClick()
         }
         function getCookie(name) {
             let cookieValue = null;
@@ -429,28 +429,40 @@
         ])
                     }
                 })
+                // chessClick()
                 $("#haltGame").hide()
             }
 
         }
         const loadExistingGame = (matchID)=>{
             $.ajax({
-                url: window.origin,
+                url: window.origin + '/MatchStart',
                 method: 'POST',
                 data:{
+                    requestingMatchID: false,
                     matchID: matchID,
-                    type: "load game"
+                    type: "load game",
+                    csrfmiddlewaretoken:getCookie('csrftoken')
                 },
                 success: (callback)=>{
+                    console.log(callback)
                     loadMap(callback.map)
                 }
             })
+            // chessClick()
+            $("#haltGame").hide()
         }
         const loadMap = (maps)=>{
             for(i=0;i<=9;i++){
                 for(j=0;j<=8;j++){
                     if (maps[i][j]!==""){
-                        $(`#${i}${j}`).html(`<span class="chessWrap"><img class="chessUnit" src="/static/imgs/chess/${maps[i][j]}.png"></img></span>`)
+                        $(`#${i}${j}`).html(`<span class="chessWrap" id="${maps[i][j]}"><img class="chessUnit" src="/static/imgs/chess/${maps[i][j]}.png"></img></span>`)
+                        $(`#${i}${j}`).on("click", function(e){
+                            e.preventDefault();
+                            console.log($(this).closest('div').attr("id"))
+                            // highlightingGrid([80,51], $(this).closest('div').attr("id"))
+                            moveChessIndicator($(this).closest('div').attr("id"))
+                        })
                     }
                 }
             }
@@ -462,6 +474,9 @@
                 data:{
                     matchID: localStorage.matchID,
                     type:"indicator",
+                    chessID: $(`#${currentPlace} span`).attr("id"),
+                    chessLocation: currentPlace,
+                    player: 0,
                     csrfmiddlewaretoken:getCookie('csrftoken'),
                 },
                 success: (back)=>{

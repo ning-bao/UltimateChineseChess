@@ -1,38 +1,57 @@
 from django.shortcuts import render, HttpResponse
 from django.http import JsonResponse
-try:
-    from . import utils
-except:
-    pass
+from .utils import UltimateChineseChess
+import uuid
+import shutil
+import json
 
 
 def index(req):
     if req.method == "GET":
         return render(req, 'index.html')
     elif req.method == "POST":
-        ChessComponent = utils.UltimateChineseChess(False, "en-us", req.POST["matchID"])
+        ChessComponent = UltimateChineseChess(True, "en-us", req.POST["matchID"])
         posibleMovements = []
-        for i in range(8):
-            for j in range(8):
-                if ChessComponent.verifyChess("b_knight", [0,3], [i,j], 1):
+        player = int(req.POST["player"])
+        chessID = nameConverter(req.POST["chessID"])
+        currentLocation = list(map(int,req.POST["chessLocation"]))
+        gameID = req.POST["matchID"]
+        for i in range(10):
+            for j in range(9):
+                if verifyChessLocation(chessID, currentLocation, [i,j], player, gameID):
                     posibleMovements.append("%s%s"%(i,j))
-        print(posibleMovements)
         if req.POST["type"] == 'indicator':
             return JsonResponse({
-                "highlight":[11,52,31,56]
+                "highlight":posibleMovements
             })
 
 def startMatch(req):
+    print(req.POST["requestingMatchID"])
+
     if req.method == 'POST':
-        if req.POST["requestingMatchID"]:
+        if req.POST["requestingMatchID"] == 'true':
+            matchID = str(uuid.uuid1())
+            shutil.copy("SavedGamePlay/00000001.json", "SavedGamePlay/%s.json"%matchID)
             return JsonResponse({
-                "matchID":"00000001"
+                "matchID": matchID
             })
         else:
-            for n in req.POST:
-                print(n)
+            matchID = req.POST["matchID"]
+            f = open("SavedGamePlay/%s.json"%matchID)
+            matchMap = json.load(f)["currentMap"]
+            for n in range(len(matchMap)):
+                for m in range(len(matchMap[n])):
+                    matchMap[n][m] = nameConverter(matchMap[n][m])
+            f.close()
+            return JsonResponse({
+                "matchID": matchID,
+                "map":matchMap
+            })
+
 
 def nameConverter(name):
+    if name == "":
+        return ""
     fine = ''
     if "black" in name:
         fine = "b_"+name.split("-")[0]
@@ -44,6 +63,10 @@ def nameConverter(name):
         fine = name.split("_")[1]+"-red"
     else:
         raise SyntaxError("You should pass in a chess name here")
+    return(fine)
 
+def verifyChessLocation(name, initialLocation: list, finalLocation: list, player: int, gameID):
+    cc = UltimateChineseChess(False,"en-us",gameID)
+    return cc.verifyChess(name,initialLocation,finalLocation,player)
 if __name__ == "__main__":
-    nameConverter('yhfe8w')
+    verifyChessLocation("r_car",[9,0],[8,0],0, "00000001")
