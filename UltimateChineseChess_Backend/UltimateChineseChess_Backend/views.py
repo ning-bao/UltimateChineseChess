@@ -10,7 +10,6 @@ def index(req):
     if req.method == "GET":
         return render(req, 'index.html')
     elif req.method == "POST":
-        ChessComponent = UltimateChineseChess(True, "en-us", req.POST["matchID"])
         posibleMovements = []
         player = int(req.POST["player"])
         chessID = nameConverter(req.POST["chessID"])

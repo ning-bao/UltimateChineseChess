@@ -372,6 +372,7 @@
         const chessClick = ()=>{
             $("span").on("click", function(e){
                 e.preventDefault();
+                alert("chess click applied")
                 console.log($(this).closest('div').attr("id"))
                 // highlightingGrid([80,51], $(this).closest('div').attr("id"))
                 moveChessIndicator($(this).closest('div').attr("id"))
@@ -379,9 +380,10 @@
         }
 
         const updateChessLocation = (newPlace, oldPlace)=>{
+            $(`#${newPlace}`).html("")
             $(`#${oldPlace} span`).detach().appendTo(`#${newPlace}`)
             deselect()
-            chessClick()
+            // chessClick()
         }
         const addChoice = (k,a,serialNo)=>{
             localStorage.setItem(k,a)
@@ -401,6 +403,7 @@
         const startGame = ()=>{
             if (localStorage.getItem('sessionSaved')==='yes'){
                 var matchID = prompt("Please give your match ID:")
+                localStorage.setItem('matchID', matchID)
                 loadExistingGame(matchID)
                 
             }else{
@@ -472,7 +475,7 @@
                 url: window.origin,
                 method: 'POST',
                 data:{
-                    matchID: localStorage.matchID,
+                    matchID: localStorage.getItem("matchID"),
                     type:"indicator",
                     chessID: $(`#${currentPlace} span`).attr("id"),
                     chessLocation: currentPlace,
@@ -499,8 +502,16 @@
                     updateChessLocation(ele_id, currentPlace)
                 })
             }
-            $(".selecting").click(()=>{
+            $("span").on("click", function(event){
+                    event.stopPropagation()
+                    event.preventDefault()
+                    alert("prevent span")
+                })
+            $(".selecting").on("click",function(event){
+                event.stopPropagation()
+                event.preventDefault()
                 deselect()
+                chessClick()
             })
         }
         const deselect = ()=>{

@@ -16,6 +16,7 @@ class UltimateChineseChess:
         '''
         self.__skipping = skipping
         self.__language = language
+        print(gameId)
         if __name__ == "__main__":
             f = open('./UltimateChineseChess_Backend/SavedGamePlay/%s.json' % gameId)
         else:
@@ -155,11 +156,11 @@ class UltimateChineseChess:
                 horizontalMovement) == 2)):
                 # Check if there are obstacles
                 if abs(verticalMovement) == 2:
-                    if self.currentMap[initialLocation[0] + int(verticalMovement / 2)] != "":
+                    if self.currentMap[initialLocation[0] + int(verticalMovement / 2)][initialLocation[1]] != "":
                         return False
 
                 elif abs(horizontalMovement) == 2:
-                    if self.currentMap[initialLocation[1] + int(horizontalMovement / 2)] != "":
+                    if self.currentMap[initialLocation[0]][initialLocation[1] + int(horizontalMovement / 2)] != "":
                         return False
             else:
                 return False
@@ -233,8 +234,8 @@ class UltimateChineseChess:
                 if not (verticalMovement == -1 and horizontalMovement == 0):
                     return False
 
-        elif name == 'king':
-            if 3 <= finalLocation[1] <= 5 and (7 <= finalLocation[0] <= 9 or 3 <= finalLocation[1] <= 5):
+        elif 'king' in name:
+            if 3 <= finalLocation[1] <= 5 and (7 <= finalLocation[0] <= 9 or 0 <= finalLocation[0] <= 2):
                 if not ((abs(horizontalMovement) == 1 and verticalMovement==0) or (abs(verticalMovement) == 1 and horizontalMovement==0)):
                     return False
             else:
@@ -255,4 +256,4 @@ if __name__ == '__main__':
         b_soldier: Black Soldier
         r_soldier: Red Soldier
     '''
-    print(chess.verifyChess("r_car",[9,0],[8,0],0))
+    print(chess.verifyChess("r_king",[9,4],[8,4],0))
