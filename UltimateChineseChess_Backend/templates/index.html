@@ -370,20 +370,45 @@
             return cookieValue;
         }
         const chessClick = ()=>{
+            alert("chess click")
             $("span").on("click", function(e){
                 e.preventDefault();
-                alert("chess click applied")
-                console.log($(this).closest('div').attr("id"))
+                // console.log($(this).closest('div').attr("id"))
                 // highlightingGrid([80,51], $(this).closest('div').attr("id"))
                 moveChessIndicator($(this).closest('div').attr("id"))
             })
         }
 
         const updateChessLocation = (newPlace, oldPlace)=>{
-            $(`#${newPlace}`).html("")
-            $(`#${oldPlace} span`).detach().appendTo(`#${newPlace}`)
-            deselect()
-            // chessClick()
+            alert("Update location")
+            $.ajax({
+                url: window.origin + 'update',
+                method: 'POST',
+                data:{
+                    matchID: localStorage.getItem("matchID"),
+                    type:"update",
+                    oldLocation: oldPlace,
+                    newLocation: newPlace,
+                    player: 0,
+                    csrfmiddlewaretoken:getCookie('csrftoken'),
+                },
+                success: (back)=>{
+                    if (back.status === 'success'){
+                        $(`#${newPlace}`).html("")
+                        $(`#${oldPlace} .chessWrap`).detach().appendTo(`#${newPlace}`)
+                        deselect()
+                        $("span").off("click")
+                    }else{
+                        $(".noteContent").text("Action forbidden")
+                    }
+                },
+                error:(e)=>{
+                    $(".hintTitle").text("Error:")
+                    $(".noteContent").text(e.content)
+                    $(".notificationBar").show()
+                }
+            })
+
         }
         const addChoice = (k,a,serialNo)=>{
             localStorage.setItem(k,a)
@@ -448,7 +473,7 @@
                     csrfmiddlewaretoken:getCookie('csrftoken')
                 },
                 success: (callback)=>{
-                    console.log(callback)
+                    // console.log(callback)
                     loadMap(callback.map)
                 }
             })
@@ -462,7 +487,7 @@
                         $(`#${i}${j}`).html(`<span class="chessWrap" id="${maps[i][j]}"><img class="chessUnit" src="/static/imgs/chess/${maps[i][j]}.png"></img></span>`)
                         $(`#${i}${j}`).on("click", function(e){
                             e.preventDefault();
-                            console.log($(this).closest('div').attr("id"))
+                            // console.log($(this).closest('div').attr("id"))
                             // highlightingGrid([80,51], $(this).closest('div').attr("id"))
                             moveChessIndicator($(this).closest('div').attr("id"))
                         })
@@ -471,6 +496,7 @@
             }
         }
         const moveChessIndicator = (currentPlace)=>{
+            alert("move chess")
             $.ajax({
                 url: window.origin,
                 method: 'POST',
@@ -493,6 +519,7 @@
             })
         }
         const highlightingGrid = (arr, currentPlace)=>{
+            alert("highlight")
             $(`#${currentPlace} span`).addClass('selecting')
             for (i=0;i<arr.length;i++){
                 let ele_id = arr[i]
@@ -502,11 +529,7 @@
                     updateChessLocation(ele_id, currentPlace)
                 })
             }
-            $("span").on("click", function(event){
-                    event.stopPropagation()
-                    event.preventDefault()
-                    alert("prevent span")
-                })
+            $("span").off("click")
             $(".selecting").on("click",function(event){
                 event.stopPropagation()
                 event.preventDefault()
@@ -516,10 +539,10 @@
         }
         const deselect = ()=>{
                 // deselecting...
-                
+                alert("deselect")
                 $('.selecting').removeClass('selecting')
                 $('.highlight').removeClass('highlight')
-            
+
         }
     </script>
 </body>

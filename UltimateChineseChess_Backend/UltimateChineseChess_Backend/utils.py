@@ -16,13 +16,13 @@ class UltimateChineseChess:
         '''
         self.__skipping = skipping
         self.__language = language
-        print(gameId)
+        # print(gameId)
         if __name__ == "__main__":
             f = open('./UltimateChineseChess_Backend/SavedGamePlay/%s.json' % gameId)
         else:
             f = open('./SavedGamePlay/%s.json' % gameId)
         self.currentMap = json.load(f)["currentMap"]
-        print(self.currentMap)
+        # print(self.currentMap)
         f.close()
         # print(self.currentMap)
         self.initialMap = [
@@ -140,8 +140,8 @@ class UltimateChineseChess:
                     return False
                 for i in range(1, abs(verticalMovement)):
                     # Judging direction of moving(down or up)
-                    print(i)
-                    print(initialLocation)
+                    # print(i)
+                    # print(initialLocation)
                     if verticalMovement > 0:
                         if self.currentMap[initialLocation[0] + i][initialLocation[1]] != "":
                             return False
