@@ -67,5 +67,6 @@ def nameConverter(name):
 def verifyChessLocation(name, initialLocation: list, finalLocation: list, player: int, gameID):
     cc = UltimateChineseChess(False,"en-us",gameID)
     return cc.verifyChess(name,initialLocation,finalLocation,player)
+
 if __name__ == "__main__":
     verifyChessLocation("r_car",[9,0],[8,0],0, "00000001")

@@ -370,7 +370,7 @@
             return cookieValue;
         }
         const chessClick = ()=>{
-            alert("chess click")
+            // alert("chess click")
             $("span").on("click", function(e){
                 e.preventDefault();
                 // console.log($(this).closest('div').attr("id"))
@@ -380,7 +380,7 @@
         }
 
         const updateChessLocation = (newPlace, oldPlace)=>{
-            alert("Update location")
+            $("#wait").show()
             $.ajax({
                 url: window.origin + 'update',
                 method: 'POST',
@@ -496,7 +496,7 @@
             }
         }
         const moveChessIndicator = (currentPlace)=>{
-            alert("move chess")
+            // alert("move chess")
             $.ajax({
                 url: window.origin,
                 method: 'POST',
@@ -519,7 +519,7 @@
             })
         }
         const highlightingGrid = (arr, currentPlace)=>{
-            alert("highlight")
+            // alert("highlight")
             $(`#${currentPlace} span`).addClass('selecting')
             for (i=0;i<arr.length;i++){
                 let ele_id = arr[i]
@@ -539,7 +539,7 @@
         }
         const deselect = ()=>{
                 // deselecting...
-                alert("deselect")
+                // alert("deselect")
                 $('.selecting').removeClass('selecting')
                 $('.highlight').removeClass('highlight')
 
